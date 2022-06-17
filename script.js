@@ -207,6 +207,29 @@ const headerObserver = new IntersectionObserver(obsCallback, obsOptions);
 headerObserver.observe(header);
 
 ////////////////////////////////////////////////////////////////
+// Reveal sections using Intersection Observer API
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, sectionObserver) {
+  const [entry] = entries;
+  console.log(entry);
+
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  sectionObserver.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach(function (section) {
+  section.classList.add('section--hidden');
+  sectionObserver.observe(section);
+});
+
+////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 // console.log(document.documentElement);
