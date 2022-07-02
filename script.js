@@ -224,7 +224,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 });
 
 allSections.forEach(function (section) {
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
   sectionObserver.observe(section);
 });
 
@@ -257,6 +257,63 @@ imgTargets.forEach(img => imgObserver.observe(img));
 
 ////////////////////////////////////////////////////////////////
 // Slider component
+const slides = document.querySelectorAll('.slide');
+const slider = document.querySelector('.slider');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+
+let curSlide = 0;
+const maxSlide = slides.length;
+
+// slider.style.transform = 'scale(0.3) translateX(-800px)';
+// slider.style.overflow = 'visible';
+
+// Before adding code refactoring
+// slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
+
+// btnRight.addEventListener('click', function () {
+//   if (curSlide === maxSlide-1) {
+//     curSlide = 0;
+//   } else {
+//     curSlide++;
+//   }
+
+//   slides.forEach(
+//     (s, i) => (s.style.transform = `translateX(${100 * (i - curSlide)}%)`)
+//   );
+// });
+
+// After adding refactoring
+const goToSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+  );
+};
+
+goToSlide(0);
+
+const nextSlide = function () {
+  if (curSlide === maxSlide - 1) {
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
+
+  goToSlide(curSlide);
+};
+
+const prevSlide = function () {
+  if (curSlide === 0) {
+    curSlide = maxSlide - 1;
+  } else {
+    curSlide--;
+  }
+
+  goToSlide(curSlide);
+};
+
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
